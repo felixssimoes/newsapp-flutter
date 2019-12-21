@@ -1,4 +1,3 @@
-import 'package:newsapp/data/models/article.model.dart';
 import 'package:newsapp/config/locator.config.dart';
 import 'package:newsapp/data/api/news.api.dart';
 import 'package:newsapp/data/models/category.model.dart';

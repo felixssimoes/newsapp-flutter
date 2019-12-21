@@ -17,6 +17,7 @@ class Category {
       final articlesJson = json['articles'] as List<dynamic>;
       List<Article> articles = articlesJson
           .map((articleJson) => Article.fromJson(articleJson))
+          .where((article) => article != null)
           .toList();
 
       return Category._(
