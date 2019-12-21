@@ -45,7 +45,7 @@ class ArticleCell extends StatelessWidget {
 
   Widget _buildImage() {
     if (article.imageUrl == null) {
-      Placeholder(fallbackHeight: _imageHeigth);
+      return Placeholder(fallbackHeight: _imageHeigth);
     }
 
     return ClipRRect(
