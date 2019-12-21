@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:newsapp/data/api/api.key.dart';
 
@@ -8,18 +11,18 @@ const _defaultPageSize = 20;
 class NewsApi {
   final http.Client client;
 
-  NewsApi({this.client});
+  NewsApi({@required this.client});
 
-  Future<dynamic> getNewsForCategory(String category, {int page = 0}) async {
-    final response = await client.get(_getNewsHeadlinesUrl(
+  Future<dynamic> getTopHeadlinesForCategory(String category,
+      {int page = 0}) async {
+    final response = await client.get(_getTopHeadlinesUrl(
       category,
       page: page,
     ));
-    print(response.body);
-    return null;
+    return json.decode(response.body);
   }
 
-  String _getNewsHeadlinesUrl(
+  String _getTopHeadlinesUrl(
     String category, {
     int page,
     int pageSize = _defaultPageSize,
