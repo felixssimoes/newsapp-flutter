@@ -6,7 +6,7 @@ import 'package:newsapp/ui/widgets/articles/article_cell.dart';
 import 'package:provider/provider.dart';
 
 const _padding = 6.0;
-const _cellHeight = 232;
+const _cellHeight = 240;
 
 class CategoryScreen extends StatefulWidget {
   final String categoryName;
@@ -19,7 +19,8 @@ class CategoryScreen extends StatefulWidget {
 }
 
 class _CategoryScreenState extends State<CategoryScreen> {
-  final NewsProvider _newsProvider = locator();
+  final _newsProvider = locator<NewsProvider>();
+  bool _isLoadingMore = false;
 
   @override
   Widget build(BuildContext context) {
@@ -46,31 +47,50 @@ class _CategoryScreenState extends State<CategoryScreen> {
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: _padding),
-      child: CustomScrollView(
-        slivers: <Widget>[
-          SliverGrid(
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              childAspectRatio: childAspectRatio,
+      child: NotificationListener<ScrollNotification>(
+        onNotification: (ScrollNotification scrollInfo) {
+          if (!_isLoadingMore &&
+              provider.canLoadMore &&
+              scrollInfo.metrics.pixels >=
+                  scrollInfo.metrics.maxScrollExtent * 0.8) {
+            _isLoadingMore = true;
+            provider.loadMore().then((_) => _isLoadingMore = false);
+          }
+          return false;
+        },
+        child: CustomScrollView(
+          slivers: <Widget>[
+            SliverGrid(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: childAspectRatio,
+              ),
+              delegate: SliverChildBuilderDelegate(
+                (BuildContext context, int index) {
+                  final article = provider.articles[index];
+                  return Padding(
+                    padding: const EdgeInsets.only(
+                        left: _padding, right: _padding, top: _padding * 2),
+                    child: ArticleCell(article: article, onPress: () {}),
+                  );
+                },
+                childCount: provider.articles.length,
+              ),
             ),
-            delegate: SliverChildBuilderDelegate(
-              (BuildContext context, int index) {
-                final article = provider.articles[index];
-                return Padding(
-                  padding: const EdgeInsets.only(
-                      left: _padding, right: _padding, top: _padding * 2),
-                  child: ArticleCell(article: article, onPress: () {}),
-                );
-              },
-              childCount: provider.articles.length,
+            SliverToBoxAdapter(
+              child: provider.canLoadMore
+                  ? Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: CircularProgressIndicator(),
+                      ),
+                    )
+                  : Container(
+                      height: _padding * 2,
+                    ),
             ),
-          ),
-          SliverToBoxAdapter(
-            child: SizedBox(
-              height: _padding * 2,
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
