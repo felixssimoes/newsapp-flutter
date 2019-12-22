@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:newsapp/app/navigator.dart';
 import 'package:newsapp/config/locator.config.dart';
 import 'package:newsapp/data/models/article.model.dart';
-import 'package:newsapp/data/models/category.model.dart';
 import 'package:newsapp/data/providers/news.provider.dart';
 import 'package:newsapp/ui/widgets/home/category_group.dart';
 import 'package:provider/provider.dart';
@@ -40,15 +39,19 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildCategoriesList() {
     return Consumer<NewsProvider>(
-      builder: (BuildContext context, NewsProvider provider, Widget child) =>
-          ListView(
-        children: provider.categories
-            .map((category) => CategoryGroup(
-                category: category,
-                onPressViewAll: () => _onPressViewAll(category),
-                onPressArticle: _onPressArticle))
-            .toList(),
-      ),
+      builder: (BuildContext context, NewsProvider provider, Widget child) {
+        return ListView(
+          children: provider.categoriesProviders.map((provider) {
+            return ChangeNotifierProvider.value(
+              value: provider,
+              child: CategoryGroup(
+                onPressViewAll: () => _onPressViewAll(provider.categoryName),
+                onPressArticle: _onPressArticle,
+              ),
+            );
+          }).toList(),
+        );
+      },
     );
   }
 
@@ -62,8 +65,8 @@ class _HomeScreenState extends State<HomeScreen> {
     this.setState(() => _loading = false);
   }
 
-  void _onPressViewAll(Category category) {
-    _navigator.openCategoryScreen(category);
+  void _onPressViewAll(String categoryName) {
+    _navigator.openCategoryScreen(categoryName);
   }
 
   void _onPressArticle(Article article) {

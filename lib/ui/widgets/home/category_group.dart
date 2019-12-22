@@ -1,41 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:newsapp/data/models/article.model.dart';
-import 'package:newsapp/data/models/category.model.dart';
+import 'package:newsapp/data/providers/category.provider.dart';
 import 'package:newsapp/ui/widgets/articles/article_cell.dart';
+import 'package:provider/provider.dart';
 
 const _cellHeight = 292.0;
 
 class CategoryGroup extends StatelessWidget {
-  final Category category;
   final Function onPressViewAll;
   final Function(Article) onPressArticle;
 
   const CategoryGroup({
     Key key,
-    @required this.category,
     @required this.onPressViewAll,
     @required this.onPressArticle,
-  })  : assert(category != null),
-        assert(onPressViewAll != null),
+  })  : assert(onPressViewAll != null),
         assert(onPressArticle != null),
         super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: _cellHeight,
-      margin: const EdgeInsets.only(left: 6),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          _buildGroupHeader(context),
-          _buildArticlesList(),
-        ],
-      ),
+    return Consumer<CategoryProvider>(
+      builder: (BuildContext context, CategoryProvider provider, Widget child) {
+        return Container(
+          height: _cellHeight,
+          margin: const EdgeInsets.only(left: 6),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              _buildGroupHeader(context, provider),
+              _buildArticlesList(provider),
+            ],
+          ),
+        );
+      },
     );
   }
 
-  Widget _buildGroupHeader(BuildContext context) {
+  Widget _buildGroupHeader(BuildContext context, CategoryProvider provider) {
     return Padding(
       padding: const EdgeInsets.all(6),
       child: Row(
@@ -44,7 +46,7 @@ class CategoryGroup extends StatelessWidget {
         textBaseline: TextBaseline.alphabetic,
         children: <Widget>[
           Text(
-            category.name,
+            provider.categoryName,
             textAlign: TextAlign.left,
             style: Theme.of(context)
                 .textTheme
@@ -65,12 +67,12 @@ class CategoryGroup extends StatelessWidget {
     );
   }
 
-  Widget _buildArticlesList() {
+  Widget _buildArticlesList(CategoryProvider provider) {
     return Expanded(
       child: ListView(
         itemExtent: 195,
         scrollDirection: Axis.horizontal,
-        children: category.articles
+        children: provider.articles
             .take(6)
             .map((article) => Padding(
                   padding: const EdgeInsets.only(right: 6, left: 6, bottom: 12),

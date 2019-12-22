@@ -1,25 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:newsapp/config/locator.config.dart';
-import 'package:newsapp/data/models/category.model.dart';
-import 'package:newsapp/data/repository/news.repository.dart';
+import 'package:newsapp/data/providers/category.provider.dart';
+
+const kNewsCategories = [
+  'business',
+  'entertainment',
+  'general',
+  'health',
+  'science',
+  'sports',
+  'technology',
+];
 
 class NewsProvider extends ChangeNotifier {
-  final _repo = locator<NewsRepository>();
-  var _categoriesMap = Map<String, Category>();
-  var _categories = List<Category>();
+  var _categoriesMap = Map<String, CategoryProvider>();
+  var _categoriesProviders = List<CategoryProvider>();
 
-  List<Category> get categories => _categories;
+  List<CategoryProvider> get categoriesProviders => _categoriesProviders;
 
-  Category getCategoryWithName(String category) {
+  CategoryProvider getCategoryWithName(String category) {
     return _categoriesMap[category];
   }
 
   Future<void> loadAllCategories() async {
-    _categories = await _repo.loadTopHeadlinesForAllCategories();
-    _categoriesMap = _categories.fold({}, (map, category) {
-      map[category.name] = category;
+    _categoriesProviders = kNewsCategories.map((category) {
+      return CategoryProvider(categoryName: category)..load();
+    }).toList();
+
+    _categoriesMap = _categoriesProviders.fold({}, (map, provider) {
+      map[provider.categoryName] = provider;
       return map;
     });
+
     notifyListeners();
   }
 }

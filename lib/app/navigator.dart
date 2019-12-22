@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:newsapp/data/models/article.model.dart';
-import 'package:newsapp/data/models/category.model.dart';
 import 'package:newsapp/ui/screens/article/article.screen.dart';
 import 'package:newsapp/ui/screens/category/category.screen.dart';
 import 'package:newsapp/ui/screens/home/home.screen.dart';
@@ -16,8 +15,10 @@ class AppNavigator {
     return {
       AppRoutes.root: (_) => HomeScreen(),
       AppRoutes.category: (context) {
-        final category = ModalRoute.of(context).settings.arguments;
-        return CategoryScreen(category: category);
+        final categoryName = ModalRoute.of(context).settings.arguments;
+        return CategoryScreen(
+          categoryName: categoryName,
+        );
       },
       AppRoutes.article: (context) {
         final article = ModalRoute.of(context).settings.arguments;
@@ -32,10 +33,10 @@ class AppNavigator {
     return rootNavigatorKey.currentState.pop(value);
   }
 
-  void openCategoryScreen(Category category) {
+  void openCategoryScreen(String categoryName) {
     rootNavigatorKey.currentState.pushNamed(
       AppRoutes.category,
-      arguments: category,
+      arguments: categoryName,
     );
   }
 
