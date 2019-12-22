@@ -67,6 +67,8 @@ class ArticleCell extends StatelessWidget {
         children: <Widget>[
           Text(
             article.source,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
             style: TextStyle(
               color: Color(0xFFD66215),
               fontSize: 14,
@@ -87,6 +89,8 @@ class ArticleCell extends StatelessWidget {
           SizedBox(height: 6),
           Text(
             Jiffy(article.publishedAt).fromNow(),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
             style: TextStyle(
               color: Color(0xFFA5A5A4),
               fontSize: 14,
