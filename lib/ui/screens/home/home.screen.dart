@@ -17,7 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    _loadHeadlines();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _loadHeadlines());
     super.initState();
   }
 
@@ -61,8 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _loadHeadlines() async {
     this.setState(() => _loading = true);
-    // small delay to avoid state change during building -> Needs better approach
-    await Future.delayed(Duration(milliseconds: 500));
+
     await locator<NewsProvider>().loadAllCategories();
     this.setState(() => _loading = false);
   }
