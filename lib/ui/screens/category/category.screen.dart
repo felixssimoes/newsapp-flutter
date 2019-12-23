@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:newsapp/app/navigator.dart';
 import 'package:newsapp/config/locator.config.dart';
+import 'package:newsapp/data/models/article.model.dart';
 import 'package:newsapp/data/providers/category.provider.dart';
 import 'package:newsapp/data/providers/news.provider.dart';
 import 'package:newsapp/ui/widgets/articles/article_cell.dart';
@@ -19,6 +21,7 @@ class CategoryScreen extends StatefulWidget {
 }
 
 class _CategoryScreenState extends State<CategoryScreen> {
+  final _navigator = locator<AppNavigator>();
   final _newsProvider = locator<NewsProvider>();
   bool _isLoadingMore = false;
 
@@ -70,7 +73,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
                         right: _padding,
                         top: _padding * 2,
                       ),
-                      child: ArticleCell(article: article, onPress: () {}),
+                      child: ArticleCell(
+                        article: article,
+                        onPress: () => _onPressArticle(article),
+                      ),
                     );
                   },
                   childCount: provider.articles.length,
@@ -110,5 +116,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
       await provider.loadMore();
       _isLoadingMore = false;
     }
+  }
+
+  void _onPressArticle(Article article) {
+    _navigator.openArticleScreen(article);
   }
 }
