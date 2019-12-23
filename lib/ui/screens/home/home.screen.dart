@@ -78,7 +78,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future _onPullToRefresh(NewsProvider provider) async {
-    await Future.delayed(Duration(seconds: 1));
     await provider.loadAllCategories();
   }
 

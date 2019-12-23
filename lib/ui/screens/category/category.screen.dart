@@ -127,7 +127,6 @@ class _CategoryScreenState extends State<CategoryScreen> {
         provider.canLoadMore &&
         scrollInfo.metrics.pixels >= scrollInfo.metrics.maxScrollExtent * 0.8) {
       _isLoadingMore = true;
-      await Future.delayed(Duration(seconds: 1));
       await provider.loadMore();
       _isLoadingMore = false;
     }
