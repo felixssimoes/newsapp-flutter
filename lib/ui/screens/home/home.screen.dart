@@ -3,6 +3,7 @@ import 'package:newsapp/app/navigator.dart';
 import 'package:newsapp/config/locator.config.dart';
 import 'package:newsapp/data/models/article.model.dart';
 import 'package:newsapp/data/providers/news.provider.dart';
+import 'package:newsapp/ui/widgets/adaptive_refreshable_sliver.dart';
 import 'package:newsapp/ui/widgets/home/category_group.dart';
 import 'package:provider/provider.dart';
 
@@ -40,25 +41,44 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildCategoriesList() {
     return Consumer<NewsProvider>(
       builder: (BuildContext context, NewsProvider provider, Widget child) {
-        return RefreshIndicator(
+        return AdaptiveRefreshableSliver(
           onRefresh: () async => await _onPullToRefresh(provider),
-          child: ListView(
-            children: provider.categoriesProviders.map((provider) {
-              return ChangeNotifierProvider.value(
-                value: provider,
-                child: CategoryGroup(
-                  onPressViewAll: () => _onPressViewAll(provider.categoryName),
-                  onPressArticle: _onPressArticle,
-                ),
-              );
-            }).toList(),
-          ),
+          slivers: <Widget>[
+            _buildCategoriesSliver(provider),
+            _buildFooterSliver()
+          ],
         );
       },
     );
   }
 
+  SliverList _buildCategoriesSliver(NewsProvider provider) {
+    return SliverList(
+      delegate: SliverChildBuilderDelegate(
+        (BuildContext context, int index) {
+          final categoryProvider = provider.categoriesProviders[index];
+          return ChangeNotifierProvider.value(
+            value: categoryProvider,
+            child: CategoryGroup(
+              onPressViewAll: () =>
+                  _onPressViewAll(categoryProvider.categoryName),
+              onPressArticle: _onPressArticle,
+            ),
+          );
+        },
+        childCount: provider.categoriesProviders.length,
+      ),
+    );
+  }
+
+  SliverToBoxAdapter _buildFooterSliver() {
+    return SliverToBoxAdapter(
+      child: SafeArea(child: Container()),
+    );
+  }
+
   Future _onPullToRefresh(NewsProvider provider) async {
+    await Future.delayed(Duration(seconds: 1));
     await provider.loadAllCategories();
   }
 
