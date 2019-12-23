@@ -4,6 +4,7 @@ import 'package:newsapp/config/locator.config.dart';
 import 'package:newsapp/data/models/article.model.dart';
 import 'package:newsapp/data/providers/category.provider.dart';
 import 'package:newsapp/data/providers/news.provider.dart';
+import 'package:newsapp/ui/widgets/adaptive_progress_indicator.dart';
 import 'package:newsapp/ui/widgets/articles/article_cell.dart';
 import 'package:provider/provider.dart';
 
@@ -83,16 +84,19 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 ),
               ),
               SliverToBoxAdapter(
-                child: provider.canLoadMore
-                    ? Center(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: CircularProgressIndicator(),
-                        ),
-                      )
-                    : Container(
-                        height: _padding * 2,
-                      ),
+                child: SafeArea(
+                  child: provider.canLoadMore
+                      ? Center(
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                              top: _padding * 4,
+                              bottom: _padding * 2,
+                            ),
+                            child: AdaptiveProgressIndicator(),
+                          ),
+                        )
+                      : Container(height: _padding * 2),
+                ),
               ),
             ],
           ),
@@ -113,6 +117,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
         provider.canLoadMore &&
         scrollInfo.metrics.pixels >= scrollInfo.metrics.maxScrollExtent * 0.8) {
       _isLoadingMore = true;
+      await Future.delayed(Duration(seconds: 1));
       await provider.loadMore();
       _isLoadingMore = false;
     }
