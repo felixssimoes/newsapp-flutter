@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:newsapp/data/models/article.model.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class ArticleScreen extends StatelessWidget {
   final Article article;
@@ -16,7 +17,9 @@ class ArticleScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(article.title),
       ),
-      body: Text(article.teaserText),
+      body: WebView(
+        initialUrl: article.url,
+      ),
     );
   }
 }
