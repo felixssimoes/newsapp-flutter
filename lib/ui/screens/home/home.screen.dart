@@ -40,19 +40,26 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildCategoriesList() {
     return Consumer<NewsProvider>(
       builder: (BuildContext context, NewsProvider provider, Widget child) {
-        return ListView(
-          children: provider.categoriesProviders.map((provider) {
-            return ChangeNotifierProvider.value(
-              value: provider,
-              child: CategoryGroup(
-                onPressViewAll: () => _onPressViewAll(provider.categoryName),
-                onPressArticle: _onPressArticle,
-              ),
-            );
-          }).toList(),
+        return RefreshIndicator(
+          onRefresh: () async => await _onPullToRefresh(provider),
+          child: ListView(
+            children: provider.categoriesProviders.map((provider) {
+              return ChangeNotifierProvider.value(
+                value: provider,
+                child: CategoryGroup(
+                  onPressViewAll: () => _onPressViewAll(provider.categoryName),
+                  onPressArticle: _onPressArticle,
+                ),
+              );
+            }).toList(),
+          ),
         );
       },
     );
+  }
+
+  Future _onPullToRefresh(NewsProvider provider) async {
+    await provider.loadAllCategories();
   }
 
   Widget _buildLoading() {

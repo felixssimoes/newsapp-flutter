@@ -49,49 +49,66 @@ class _CategoryScreenState extends State<CategoryScreen> {
       padding: const EdgeInsets.symmetric(horizontal: _padding),
       child: NotificationListener<ScrollNotification>(
         onNotification: (ScrollNotification scrollInfo) {
-          if (!_isLoadingMore &&
-              provider.canLoadMore &&
-              scrollInfo.metrics.pixels >=
-                  scrollInfo.metrics.maxScrollExtent * 0.8) {
-            _isLoadingMore = true;
-            provider.loadMore().then((_) => _isLoadingMore = false);
-          }
+          _onLoadMore(provider, scrollInfo);
           return false;
         },
-        child: CustomScrollView(
-          slivers: <Widget>[
-            SliverGrid(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: childAspectRatio,
-              ),
-              delegate: SliverChildBuilderDelegate(
-                (BuildContext context, int index) {
-                  final article = provider.articles[index];
-                  return Padding(
-                    padding: const EdgeInsets.only(
-                        left: _padding, right: _padding, top: _padding * 2),
-                    child: ArticleCell(article: article, onPress: () {}),
-                  );
-                },
-                childCount: provider.articles.length,
-              ),
-            ),
-            SliverToBoxAdapter(
-              child: provider.canLoadMore
-                  ? Center(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: CircularProgressIndicator(),
+        child: RefreshIndicator(
+          onRefresh: () async => await _onPullToRefresh(provider),
+          child: CustomScrollView(
+            slivers: <Widget>[
+              SliverGrid(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: childAspectRatio,
+                ),
+                delegate: SliverChildBuilderDelegate(
+                  (BuildContext context, int index) {
+                    final article = provider.articles[index];
+                    return Padding(
+                      padding: const EdgeInsets.only(
+                        left: _padding,
+                        right: _padding,
+                        top: _padding * 2,
                       ),
-                    )
-                  : Container(
-                      height: _padding * 2,
-                    ),
-            ),
-          ],
+                      child: ArticleCell(article: article, onPress: () {}),
+                    );
+                  },
+                  childCount: provider.articles.length,
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: provider.canLoadMore
+                    ? Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: CircularProgressIndicator(),
+                        ),
+                      )
+                    : Container(
+                        height: _padding * 2,
+                      ),
+              ),
+            ],
+          ),
         ),
       ),
     );
+  }
+
+  Future<void> _onPullToRefresh(CategoryProvider provider) async {
+    await provider.load();
+  }
+
+  void _onLoadMore(
+    CategoryProvider provider,
+    ScrollNotification scrollInfo,
+  ) async {
+    if (!_isLoadingMore &&
+        provider.canLoadMore &&
+        scrollInfo.metrics.pixels >= scrollInfo.metrics.maxScrollExtent * 0.8) {
+      _isLoadingMore = true;
+      await provider.loadMore();
+      _isLoadingMore = false;
+    }
   }
 }
