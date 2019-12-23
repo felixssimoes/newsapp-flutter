@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:newsapp/config/locator.config.dart';
+import 'package:newsapp/data/api/news.api.dart';
 import 'package:newsapp/data/models/article.model.dart';
-import 'package:newsapp/data/models/category.model.dart';
-import 'package:newsapp/data/repository/news.repository.dart';
 
 class CategoryProvider extends ChangeNotifier {
-  final _repo = locator<NewsRepository>();
+  final _api = locator<NewsApi>();
   final String categoryName;
 
-  Category _category;
   List<Article> _articles = [];
+  int _totalResults = 0;
 
   bool get canLoadMore {
-    if (_category == null) return false;
-    return _articles.length < _category.totalResults;
+    return _articles.length < _totalResults;
   }
 
   List<Article> get articles => _articles;
@@ -22,18 +20,33 @@ class CategoryProvider extends ChangeNotifier {
       : assert(categoryName != null);
 
   Future<void> load() async {
-    _category = await _repo.loadTopHeadlinesForCategory(categoryName);
-    _articles = _category.articles;
+    _articles = [];
+    await _loadCategory();
     notifyListeners();
   }
 
   Future<void> loadMore() async {
     final currentPage = (_articles.length / 20).floor();
-    _category = await _repo.loadTopHeadlinesForCategory(
-      categoryName,
-      page: currentPage + 1,
-    );
-    _articles.addAll(_category.articles);
+    await _loadCategory(page: currentPage + 1);
     notifyListeners();
+  }
+
+  Future<void> _loadCategory({int page = 1}) async {
+    final response = await _api.getTopHeadlinesForCategory(
+      categoryName,
+      page: page,
+    );
+    _parseCategoriesResponse(response);
+  }
+
+  void _parseCategoriesResponse(Map<String, dynamic> json) {
+    final articlesJson = json['articles'] as List<dynamic>;
+    List<Article> articles = articlesJson
+        .map((articleJson) => Article.fromJson(articleJson))
+        .where((article) => article != null)
+        .toList();
+
+    _totalResults = json['totalResults'];
+    _articles.addAll(articles);
   }
 }
