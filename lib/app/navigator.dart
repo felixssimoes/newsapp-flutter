@@ -3,11 +3,13 @@ import 'package:newsapp/data/models/article.model.dart';
 import 'package:newsapp/ui/screens/article/article.screen.dart';
 import 'package:newsapp/ui/screens/category/category.screen.dart';
 import 'package:newsapp/ui/screens/home/home.screen.dart';
+import 'package:newsapp/ui/screens/search/search.screen.dart';
 
 class AppRoutes {
   static const root = '/';
   static const category = '/category';
   static const article = '/article';
+  static const search = '/search';
 }
 
 class AppNavigator {
@@ -23,7 +25,8 @@ class AppNavigator {
       AppRoutes.article: (context) {
         final article = ModalRoute.of(context).settings.arguments;
         return ArticleScreen(article: article);
-      }
+      },
+      AppRoutes.search: (_) => SearchScreen(),
     };
   }
 
@@ -45,5 +48,9 @@ class AppNavigator {
       AppRoutes.article,
       arguments: article,
     );
+  }
+
+  void openSearchScreen() {
+    rootNavigatorKey.currentState.pushNamed(AppRoutes.search);
   }
 }

@@ -28,6 +28,12 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text('News'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () => _navigator.openSearchScreen(),
+          )
+        ],
       ),
       body: _buildScreenContent(),
     );
