@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:newsapp/app/navigator.dart';
 import 'package:newsapp/data/api/news.api.dart';
 import 'package:newsapp/data/providers/news.provider.dart';
+import 'package:newsapp/data/providers/search.provider.dart';
 
 final locator = GetIt.instance;
 
@@ -17,5 +18,9 @@ void setupLocator() {
 
   locator.registerLazySingleton<NewsProvider>(
     () => NewsProvider(),
+  );
+
+  locator.registerLazySingleton<SearchProvider>(
+    () => SearchProvider(),
   );
 }

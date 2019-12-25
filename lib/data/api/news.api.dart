@@ -32,7 +32,10 @@ class UriBuilder {
   static Uri getTopHeadlinesUrl(String category, {int page}) {
     return _uriForPath(
       '/top-headlines',
-      queryParameters: {'category': category},
+      queryParameters: {
+        'country': _defaultCountry,
+        'category': category,
+      },
     );
   }
 
@@ -54,7 +57,6 @@ class UriBuilder {
       path: '/v2$path',
       queryParameters: {
         'apikey': kApiKey,
-        'country': _defaultCountry,
         'pageSize': _defaultPageSize.toString(),
         'page': max(page ?? 1, 1).toString(),
         ...queryParameters ?? {},
