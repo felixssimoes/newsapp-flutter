@@ -1,8 +1,13 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:newsapp/app/navigator.dart';
+import 'package:newsapp/config/locator.config.dart';
 import 'package:newsapp/data/providers/search.provider.dart';
+import 'package:newsapp/ui/widgets/articles/article_cell.dart';
 import 'package:provider/provider.dart';
+
+const _cellHeight = 140.0;
 
 class SearchScreen extends StatefulWidget {
   @override
@@ -10,8 +15,17 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
+  final _navigator = locator<AppNavigator>();
   final _searchController = TextEditingController();
   Timer timeHandle;
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => Provider.of<SearchProvider>(context, listen: false).reset(),
+    );
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,9 +88,17 @@ class _SearchScreenState extends State<SearchScreen> {
       builder: (BuildContext context, SearchProvider provider, Widget child) {
         return ListView.builder(
           itemCount: provider.articles.length,
+          itemExtent: _cellHeight,
           itemBuilder: (_, index) {
             final article = provider.articles[index];
-            return ListTile(title: Text(article.title));
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 12, left: 12, right: 12),
+              child: ArticleCell(
+                article: article,
+                onPress: () => _navigator.openArticleScreen(article),
+                layout: ArticleCellLayout.Horizontal,
+              ),
+            );
           },
         );
       },
@@ -94,7 +116,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
   Future<void> _doSearch(String value) async {
     print("Calling now the API: $value");
-    SearchProvider provider = Provider.of(context, listen: false);
+    final provider = Provider.of<SearchProvider>(context, listen: false);
     await provider.loadSearchNews(text: value);
   }
 }

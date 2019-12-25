@@ -21,6 +21,12 @@ class SearchProvider extends ArticlesResultProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void reset() {
+    _searchText = '';
+    clearResults(articles: true, totals: true);
+    notifyListeners();
+  }
+
   Future<void> _loadSearchNews({@required String text, int page = 1}) async {
     _searchText = text;
 
