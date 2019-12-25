@@ -40,6 +40,12 @@ class _CategoryScreenState extends State<CategoryScreen> {
           return Scaffold(
             appBar: AppBar(
               title: Text(provider.categoryName),
+              actions: <Widget>[
+                IconButton(
+                  icon: Icon(Icons.search),
+                  onPressed: () => _navigator.openSearchScreen(),
+                )
+              ],
             ),
             body: _buildContentList(context, provider),
           );
