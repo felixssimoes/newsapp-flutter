@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:newsapp/core/data.dart';
+import 'package:newsapp/core/l10n.dart';
 
 import '../domain/article.model.dart';
 import '../domain/articles.repository.dart';
@@ -35,9 +36,7 @@ class ArticlesRemoteRepository implements ArticlesRepository {
         domains != null ||
         excludeDomains != null ||
         fromDate != null ||
-        toDate != null ||
-        sortBy != null ||
-        page != null);
+        toDate != null);
     final uri = UrlBuilder.urlForEverything();
     final response = await _client.get(uri, queryParameters: {
       'language': 'en',
@@ -46,7 +45,9 @@ class ArticlesRemoteRepository implements ArticlesRepository {
       if (query != null) 'q': query,
       if (page != null) 'page': page.toString(),
     });
-    return ArticlesResponse.fromJson(response).articles ?? [];
+    return _sanitizeArticlesResponse(
+      ArticlesResponse.fromJson(response).articles,
+    );
   }
 
   @override
@@ -66,7 +67,9 @@ class ArticlesRemoteRepository implements ArticlesRepository {
       if (query != null) 'q': query,
       if (page != null) 'page': page.toString(),
     });
-    return ArticlesResponse.fromJson(response).articles ?? [];
+    return _sanitizeArticlesResponse(
+      ArticlesResponse.fromJson(response).articles,
+    );
   }
 
   @override
@@ -79,6 +82,13 @@ class ArticlesRemoteRepository implements ArticlesRepository {
       if (category != null) 'category': category,
     });
     return SourcesResponse.fromJson(response).sources ?? [];
+  }
+
+  List<Article> _sanitizeArticlesResponse(List<Article>? articles) {
+    if (articles == null) return [];
+    return articles
+        .where((article) => article.title != '[Removed]'.hardcoded)
+        .toList();
   }
 }
 
