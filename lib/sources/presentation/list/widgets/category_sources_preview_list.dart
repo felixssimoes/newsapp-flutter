@@ -58,7 +58,8 @@ class CategorySourcesPreviewList extends ConsumerWidget {
           ),
           const Spacer(),
           TextButton(
-            onPressed: () {},
+            onPressed: () =>
+                ref.read(appRouterProvider).openCategorySources(category),
             child: Center(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,

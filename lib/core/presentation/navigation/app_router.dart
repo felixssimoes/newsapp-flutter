@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:newsapp/articles/articles.dart';
+import 'package:newsapp/sources/sources.dart';
 
 import '../app/app_container.dart';
 
@@ -14,6 +15,10 @@ class AppRouter {
 
   void openArticleDetails(Article article) {
     _pushScreen((context) => ArticleDetailsScreen(article: article));
+  }
+
+  void openCategorySources(String category) {
+    _pushScreen((context) => CategorySourcesScreen(category: category));
   }
 
   // private api

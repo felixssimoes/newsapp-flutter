@@ -5,8 +5,8 @@ import 'package:newsapp/core/l10n.dart';
 import 'package:newsapp/core/presentation.dart';
 import 'package:newsapp/sources/sources.dart';
 
-class CategoryFollowingButton extends ConsumerStatefulWidget {
-  const CategoryFollowingButton({
+class SourceFollowingButton extends ConsumerStatefulWidget {
+  const SourceFollowingButton({
     required this.source,
     super.key,
   });
@@ -14,12 +14,12 @@ class CategoryFollowingButton extends ConsumerStatefulWidget {
   final Source source;
 
   @override
-  ConsumerState<CategoryFollowingButton> createState() =>
+  ConsumerState<SourceFollowingButton> createState() =>
       _CategoryFollowingButtonState();
 }
 
 class _CategoryFollowingButtonState
-    extends ConsumerState<CategoryFollowingButton> {
+    extends ConsumerState<SourceFollowingButton> {
   var isFollowing = false;
 
   @override
