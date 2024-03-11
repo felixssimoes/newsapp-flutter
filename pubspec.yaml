@@ -1,5 +1,5 @@
 name: newsapp
-description: 'A new Flutter project.'
+description: 'News app with Riverpod, Freezed, and Dio'
 
 publish_to: 'none'
 
