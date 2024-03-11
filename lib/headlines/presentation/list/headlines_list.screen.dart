@@ -36,15 +36,21 @@ class _HeadlinesListScreenState extends ConsumerState<HeadlinesListScreen> {
                 itemCount: articles.length,
                 itemBuilder: (context, index) {
                   final isFirst = index == 0;
+                  final article = articles[index];
                   return Padding(
                     padding: isFirst
                         ? const EdgeInsets.only(left: 20, right: 20, top: 30)
                         : const EdgeInsets.symmetric(horizontal: 20),
-                    child: ArticleListTile(
-                      article: articles[index],
-                      type: isFirst
-                          ? ArticleListTileType.withImage
-                          : ArticleListTileType.normal,
+                    child: GestureDetector(
+                      onTap: () => ref
+                          .read(appRouterProvider)
+                          .openArticleDetails(article),
+                      child: ArticleListTile(
+                        article: article,
+                        type: isFirst
+                            ? ArticleListTileType.withImage
+                            : ArticleListTileType.normal,
+                      ),
                     ),
                   );
                 },

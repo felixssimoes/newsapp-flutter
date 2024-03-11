@@ -7,6 +7,7 @@ export 'domain/article.model.dart';
 export 'domain/articles.repository.dart';
 export 'domain/categories.dart';
 export 'domain/source.model.dart';
+export 'presentation/details/article_details.screen.dart';
 export 'presentation/widgets/article_list_tile.dart';
 
 part 'articles.g.dart';

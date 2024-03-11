@@ -23,19 +23,27 @@ class HomeListScreen extends ConsumerWidget {
                 final isFirst = index == 0;
                 final showImage = index % 3 == 0;
                 final article = articles[index];
-                return Padding(
-                  padding: isFirst
-                      ? const EdgeInsets.only(left: 20, right: 20, top: 30)
-                      : const EdgeInsets.symmetric(horizontal: 20),
-                  child: ArticleListTile(
-                    article: article,
-                    type: showImage
-                        ? ArticleListTileType.withImage
-                        : ArticleListTileType.normal,
+                return GestureDetector(
+                  onTap: () =>
+                      ref.read(appRouterProvider).openArticleDetails(article),
+                  child: Padding(
+                    padding: isFirst
+                        ? const EdgeInsets.only(left: 20, right: 20, top: 30)
+                        : const EdgeInsets.symmetric(horizontal: 20),
+                    child: ArticleListTile(
+                      article: article,
+                      type: showImage
+                          ? ArticleListTileType.withImage
+                          : ArticleListTileType.normal,
+                    ),
                   ),
                 );
               },
-              separatorBuilder: (context, index) => const Divider(),
+              separatorBuilder: (context, index) => const Divider(
+                height: 32,
+                indent: 20,
+                endIndent: 20,
+              ),
             );
           },
           wrapperBuilder: (context, child) => SliverFillRemaining(
