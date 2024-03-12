@@ -31,3 +31,13 @@ Future<bool> isFollowingSource(
   final followedSources = await ref.watch(followedSourcesProvider.future);
   return followedSources.contains(sourceId);
 }
+
+@Riverpod(keepAlive: true)
+Future<List<Article>> sourceArticles(
+  SourceArticlesRef ref,
+  Source source,
+) async {
+  return ref
+      .watch(articlesRepositoryProvider)
+      .getEverything(sources: [source.id]);
+}

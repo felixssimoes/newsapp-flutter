@@ -29,7 +29,11 @@ class CategorySourcesScreen extends ConsumerWidget {
                 final source = sources[index];
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: SourceListTile(source: source),
+                  child: GestureDetector(
+                    onTap: () =>
+                        ref.read(appRouterProvider).openSourceDetails(source),
+                    child: SourceListTile(source: source),
+                  ),
                 );
               },
               separatorBuilder: (context, index) => const Divider(

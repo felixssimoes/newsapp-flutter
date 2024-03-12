@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:newsapp/articles/domain/source.model.dart';
 import 'package:newsapp/core/presentation.dart';
@@ -44,6 +46,13 @@ class SourceListTile extends StatelessWidget {
               SourceFollowingButton(source: source),
             ],
           ),
+        ),
+        Icon(
+          Platform.isIOS
+              ? Icons.arrow_forward_ios
+              : Icons.chevron_right_rounded,
+          color: AppColors.blueyGrey,
+          size: 24,
         ),
       ],
     );

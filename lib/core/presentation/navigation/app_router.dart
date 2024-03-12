@@ -21,6 +21,10 @@ class AppRouter {
     _pushScreen((context) => CategorySourcesScreen(category: category));
   }
 
+  void openSourceDetails(Source source) {
+    _pushScreen((context) => SourceDetailsScreen(source: source));
+  }
+
   // private api
 
   void _pushScreen(WidgetBuilder builder) {

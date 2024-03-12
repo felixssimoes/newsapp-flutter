@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:newsapp/articles/articles.dart';
 import 'package:newsapp/core/presentation.dart';
 
 import '../../widgets/category_source_icon.dart';
 import '../../widgets/source_following_button.dart';
 
-class CategorySourcePreviewItem extends StatelessWidget {
+class CategorySourcePreviewItem extends ConsumerWidget {
   const CategorySourcePreviewItem({
     required this.source,
     super.key,
@@ -14,14 +16,17 @@ class CategorySourcePreviewItem extends StatelessWidget {
   final Source source;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return SizedBox(
       width: 104,
       child: Column(
         children: [
-          CategorySourceIcon(
-            source: source,
-            size: 104,
+          GestureDetector(
+            onTap: () => ref.read(appRouterProvider).openSourceDetails(source),
+            child: CategorySourceIcon(
+              source: source,
+              size: 104,
+            ),
           ),
           const Space.vertical(12),
           Text(

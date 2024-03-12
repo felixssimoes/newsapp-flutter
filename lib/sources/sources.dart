@@ -7,6 +7,7 @@ import 'domain/sources.repository.dart';
 export 'application/sources.notifiers.dart';
 export 'presentation/category_sources/category_sources.screen.dart';
 export 'presentation/list/sources_list.screen.dart';
+export 'presentation/source_details/source_details.screen.dart';
 
 part 'sources.g.dart';
 

@@ -311,5 +311,133 @@ class _IsFollowingSourceProviderElement extends FutureProviderElement<bool>
   @override
   String get sourceId => (origin as IsFollowingSourceProvider).sourceId;
 }
+
+String _$sourceArticlesHash() => r'169487443136e670098fe33e38ab9a7ee0fb2b8f';
+
+/// See also [sourceArticles].
+@ProviderFor(sourceArticles)
+const sourceArticlesProvider = SourceArticlesFamily();
+
+/// See also [sourceArticles].
+class SourceArticlesFamily extends Family<AsyncValue<List<Article>>> {
+  /// See also [sourceArticles].
+  const SourceArticlesFamily();
+
+  /// See also [sourceArticles].
+  SourceArticlesProvider call(
+    Source source,
+  ) {
+    return SourceArticlesProvider(
+      source,
+    );
+  }
+
+  @override
+  SourceArticlesProvider getProviderOverride(
+    covariant SourceArticlesProvider provider,
+  ) {
+    return call(
+      provider.source,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'sourceArticlesProvider';
+}
+
+/// See also [sourceArticles].
+class SourceArticlesProvider extends FutureProvider<List<Article>> {
+  /// See also [sourceArticles].
+  SourceArticlesProvider(
+    Source source,
+  ) : this._internal(
+          (ref) => sourceArticles(
+            ref as SourceArticlesRef,
+            source,
+          ),
+          from: sourceArticlesProvider,
+          name: r'sourceArticlesProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$sourceArticlesHash,
+          dependencies: SourceArticlesFamily._dependencies,
+          allTransitiveDependencies:
+              SourceArticlesFamily._allTransitiveDependencies,
+          source: source,
+        );
+
+  SourceArticlesProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.source,
+  }) : super.internal();
+
+  final Source source;
+
+  @override
+  Override overrideWith(
+    FutureOr<List<Article>> Function(SourceArticlesRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: SourceArticlesProvider._internal(
+        (ref) => create(ref as SourceArticlesRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        source: source,
+      ),
+    );
+  }
+
+  @override
+  FutureProviderElement<List<Article>> createElement() {
+    return _SourceArticlesProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is SourceArticlesProvider && other.source == source;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, source.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+mixin SourceArticlesRef on FutureProviderRef<List<Article>> {
+  /// The parameter `source` of this provider.
+  Source get source;
+}
+
+class _SourceArticlesProviderElement
+    extends FutureProviderElement<List<Article>> with SourceArticlesRef {
+  _SourceArticlesProviderElement(super.provider);
+
+  @override
+  Source get source => (origin as SourceArticlesProvider).source;
+}
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
