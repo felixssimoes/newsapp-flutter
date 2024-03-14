@@ -47,7 +47,7 @@ class ApiClient {
         throw ApiException(statusCode: e.response!.statusCode!);
       }
       rethrow;
-    } on Exception catch (e) {
+    } catch (e) {
       debugLogError('GET url:$url queryParameters:$queryParameters', e);
       rethrow;
     }

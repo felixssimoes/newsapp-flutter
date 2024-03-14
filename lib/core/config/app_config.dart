@@ -1,5 +1,5 @@
-import 'secrets.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class AppConfig {
-  String get newsApiKey => kNewsApiKey;
+  String get newsApiKey => dotenv.env['new_api_key']!;
 }
