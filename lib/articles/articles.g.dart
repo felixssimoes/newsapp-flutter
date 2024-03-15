@@ -7,7 +7,7 @@ part of 'articles.dart';
 // **************************************************************************
 
 String _$articlesRepositoryHash() =>
-    r'a14532b98818ee11f2750a667067c86a903d17a3';
+    r'ea7f5004faf043f7439c0387bd14d1e45107c08c';
 
 /// See also [articlesRepository].
 @ProviderFor(articlesRepository)

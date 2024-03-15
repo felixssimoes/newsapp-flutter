@@ -2,7 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:newsapp/articles/articles.dart';
 import 'package:newsapp/sources/sources.dart';
 
-import '../domain/sources.repository.dart';
+import '../data/sources.repository.dart';
 
 class SourcesService {
   SourcesService(this._ref);

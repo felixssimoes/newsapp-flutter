@@ -5,20 +5,39 @@ import 'package:newsapp/core/data.dart';
 import 'package:newsapp/core/l10n.dart';
 
 import '../domain/article.model.dart';
-import '../domain/articles.repository.dart';
 import '../domain/source.model.dart';
 
-part 'articles_remote.repository.freezed.dart';
-part 'articles_remote.repository.g.dart';
+part 'articles.repository.freezed.dart';
+part 'articles.repository.g.dart';
 
-class ArticlesRemoteRepository implements ArticlesRepository {
-  ArticlesRemoteRepository(this._ref);
+class ArticlesRepository {
+  ArticlesRepository(this._ref);
 
   final Ref _ref;
 
   ApiClient get _client => _ref.read(apiClientProvider);
 
-  @override
+  Future<List<Article>> getTopHeadlines({
+    String? category,
+    List<String>? sources,
+    String? query,
+    int? page,
+  }) async {
+    assert(
+        category != null || sources != null || query != null || page != null);
+    final uri = UrlBuilder.urlForHeadlines();
+    final response = await _client.get(uri, queryParameters: {
+      'country': 'us',
+      if (category != null) 'category': category,
+      if (sources != null) 'sources': sources.join(','),
+      if (query != null) 'q': query,
+      if (page != null) 'page': page.toString(),
+    });
+    return _sanitizeArticlesResponse(
+      ArticlesResponse.fromJson(response).articles,
+    );
+  }
+
   Future<List<Article>> getEverything({
     String? query,
     String? searchIn,
@@ -50,29 +69,6 @@ class ArticlesRemoteRepository implements ArticlesRepository {
     );
   }
 
-  @override
-  Future<List<Article>> getTopHeadlines({
-    String? category,
-    List<String>? sources,
-    String? query,
-    int? page,
-  }) async {
-    assert(
-        category != null || sources != null || query != null || page != null);
-    final uri = UrlBuilder.urlForHeadlines();
-    final response = await _client.get(uri, queryParameters: {
-      'country': 'us',
-      if (category != null) 'category': category,
-      if (sources != null) 'sources': sources.join(','),
-      if (query != null) 'q': query,
-      if (page != null) 'page': page.toString(),
-    });
-    return _sanitizeArticlesResponse(
-      ArticlesResponse.fromJson(response).articles,
-    );
-  }
-
-  @override
   Future<List<Source>> getSources({
     String? category,
   }) async {
