@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:newsapp/articles/articles.dart';
 import 'package:newsapp/core/l10n.dart';
 import 'package:newsapp/core/presentation.dart';
 import 'package:newsapp/home/home.dart';
+
+import '../../../_helpers/widgets.dart';
 
 class HomeListScreenRobot {
   HomeListScreenRobot(this.tester);
@@ -15,12 +16,10 @@ class HomeListScreenRobot {
     required AppRouter router,
   }) async {
     await tester.pumpWidget(
-      ProviderScope(
-        overrides: [
-          articlesRepositoryProvider.overrideWithValue(repository),
-          appRouterProvider.overrideWithValue(router),
-        ],
-        child: const MaterialApp(home: HomeListScreen()),
+      wrapWithProviderScopeAndMaterialApp(
+        const HomeListScreen(),
+        articlesRepository: repository,
+        router: router,
       ),
     );
   }
