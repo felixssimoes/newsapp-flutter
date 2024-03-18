@@ -3,21 +3,21 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:newsapp/articles/articles.dart';
 import 'package:newsapp/core/l10n.dart';
 import 'package:newsapp/core/presentation.dart';
-import 'package:newsapp/home/home.dart';
+import 'package:newsapp/headlines/headlines.dart';
 
 import '../../../_helpers/widgets.dart';
 
-class HomeListScreenRobot {
-  HomeListScreenRobot(this.tester);
+class HeadlinesListScreenRobot {
+  HeadlinesListScreenRobot(this.tester);
   final WidgetTester tester;
 
-  Future<void> pumpHomeListScreen({
+  Future<void> pumpHeadlinesListScreen({
     required ArticlesRepository repository,
     required AppRouter router,
   }) async {
     await tester.pumpWidget(
       wrapWithProviderScopeAndMaterialApp(
-        const HomeListScreen(),
+        const HeadlinesListScreen(),
         articlesRepository: repository,
         router: router,
       ),
@@ -25,7 +25,7 @@ class HomeListScreenRobot {
   }
 
   void expectToFindTitle() {
-    expect(find.text('For You'.hardcoded), findsOneWidget);
+    expect(find.text('Headlines'.hardcoded), findsOneWidget);
   }
 
   void expectToFindProgressIndicator(bool visible) {
@@ -44,6 +44,11 @@ class HomeListScreenRobot {
 
   Future<void> tapArticle(int index) async {
     await tester.tap(find.byType(ArticleListTile).at(index));
+    await tester.pumpAndSettle();
+  }
+
+  Future<void> tapCategoryTab(String s) async {
+    await tester.tap(find.text(s));
     await tester.pumpAndSettle();
   }
 }

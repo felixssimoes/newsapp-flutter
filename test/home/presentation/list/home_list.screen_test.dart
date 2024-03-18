@@ -58,12 +58,13 @@ void main() {
         router: router,
       );
 
-      r.expectToFindProgressIndicator();
+      r.expectToFindTitle();
+      r.expectToFindProgressIndicator(true);
 
       await tester.pumpAndSettle();
 
-      r.expectToFindTitle();
       r.expectToFindNArticles(3);
+      r.expectToFindProgressIndicator(false);
       verify(repository.getEverything(
         query: null,
         searchIn: null,
