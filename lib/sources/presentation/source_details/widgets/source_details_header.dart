@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:newsapp/articles/articles.dart';
 import 'package:newsapp/core/presentation.dart';
 import 'package:newsapp/sources/presentation/widgets/category_source_icon.dart';
 import 'package:newsapp/sources/presentation/widgets/source_following_button.dart';
+import 'package:newsapp/sources/sources.dart';
 
 class SourceDetailsHeader extends StatelessWidget {
   const SourceDetailsHeader({

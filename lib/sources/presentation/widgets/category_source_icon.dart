@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:newsapp/articles/articles.dart';
-import 'package:newsapp/core/data/api/api_client.dart';
+import 'package:newsapp/core/data.dart';
 import 'package:newsapp/core/presentation.dart';
+import 'package:newsapp/sources/sources.dart';
 
 class CategorySourceIcon extends StatelessWidget {
   const CategorySourceIcon({

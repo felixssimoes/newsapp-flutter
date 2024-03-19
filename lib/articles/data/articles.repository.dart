@@ -5,7 +5,6 @@ import 'package:newsapp/core/data.dart';
 import 'package:newsapp/core/l10n.dart';
 
 import '../domain/article.model.dart';
-import '../domain/source.model.dart';
 
 part 'articles.repository.freezed.dart';
 part 'articles.repository.g.dart';
@@ -15,7 +14,7 @@ class ArticlesRepository {
 
   final Ref _ref;
 
-  ApiClient get _client => _ref.read(apiClientProvider);
+  ApiClient get _api => _ref.read(apiClientProvider);
 
   Future<List<Article>> getTopHeadlines({
     String? category,
@@ -26,7 +25,7 @@ class ArticlesRepository {
     assert(
         category != null || sources != null || query != null || page != null);
     final uri = UrlBuilder.urlForHeadlines();
-    final response = await _client.get(uri, queryParameters: {
+    final response = await _api.get(uri, queryParameters: {
       'country': 'us',
       if (category != null) 'category': category,
       if (sources != null) 'sources': sources.join(','),
@@ -57,7 +56,7 @@ class ArticlesRepository {
         fromDate != null ||
         toDate != null);
     final uri = UrlBuilder.urlForEverything();
-    final response = await _client.get(uri, queryParameters: {
+    final response = await _api.get(uri, queryParameters: {
       'language': 'en',
       'sortBy': 'publishedAt',
       if (sources != null) 'sources': ListParam(sources, ListFormat.csv),
@@ -67,17 +66,6 @@ class ArticlesRepository {
     return _sanitizeArticlesResponse(
       ArticlesResponse.fromJson(response).articles,
     );
-  }
-
-  Future<List<Source>> getSources({
-    String? category,
-  }) async {
-    final uri = UrlBuilder.urlForSources();
-    final response = await _client.get(uri, queryParameters: {
-      'language': 'en',
-      if (category != null) 'category': category,
-    });
-    return SourcesResponse.fromJson(response).sources ?? [];
   }
 
   List<Article> _sanitizeArticlesResponse(List<Article>? articles) {
@@ -100,17 +88,4 @@ class ArticlesResponse with _$ArticlesResponse {
 
   factory ArticlesResponse.fromJson(Map<String, dynamic> json) =>
       _$ArticlesResponseFromJson(json);
-}
-
-@freezed
-class SourcesResponse with _$SourcesResponse {
-  const factory SourcesResponse({
-    required String status,
-    List<Source>? sources,
-    String? code,
-    String? message,
-  }) = _SourcesResponse;
-
-  factory SourcesResponse.fromJson(Map<String, dynamic> json) =>
-      _$SourcesResponseFromJson(json);
 }

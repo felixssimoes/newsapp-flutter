@@ -3,12 +3,13 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i5;
+import 'dart:async' as _i6;
 
 import 'package:flutter/material.dart' as _i1;
 import 'package:mockito/mockito.dart' as _i2;
 import 'package:newsapp/articles/articles.dart' as _i4;
 import 'package:newsapp/core/presentation/navigation/app_router.dart' as _i3;
+import 'package:newsapp/sources/sources.dart' as _i5;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -70,7 +71,7 @@ class MockAppRouter extends _i2.Mock implements _i3.AppRouter {
       );
 
   @override
-  void openSourceDetails(_i4.Source? source) => super.noSuchMethod(
+  void openSourceDetails(_i5.Source? source) => super.noSuchMethod(
         Invocation.method(
           #openSourceDetails,
           [source],
@@ -89,7 +90,7 @@ class MockArticlesRepository extends _i2.Mock
   }
 
   @override
-  _i5.Future<List<_i4.Article>> getTopHeadlines({
+  _i6.Future<List<_i4.Article>> getTopHeadlines({
     String? category,
     List<String>? sources,
     String? query,
@@ -106,11 +107,11 @@ class MockArticlesRepository extends _i2.Mock
             #page: page,
           },
         ),
-        returnValue: _i5.Future<List<_i4.Article>>.value(<_i4.Article>[]),
-      ) as _i5.Future<List<_i4.Article>>);
+        returnValue: _i6.Future<List<_i4.Article>>.value(<_i4.Article>[]),
+      ) as _i6.Future<List<_i4.Article>>);
 
   @override
-  _i5.Future<List<_i4.Article>> getEverything({
+  _i6.Future<List<_i4.Article>> getEverything({
     String? query,
     String? searchIn,
     List<String>? sources,
@@ -137,17 +138,6 @@ class MockArticlesRepository extends _i2.Mock
             #page: page,
           },
         ),
-        returnValue: _i5.Future<List<_i4.Article>>.value(<_i4.Article>[]),
-      ) as _i5.Future<List<_i4.Article>>);
-
-  @override
-  _i5.Future<List<_i4.Source>> getSources({String? category}) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #getSources,
-          [],
-          {#category: category},
-        ),
-        returnValue: _i5.Future<List<_i4.Source>>.value(<_i4.Source>[]),
-      ) as _i5.Future<List<_i4.Source>>);
+        returnValue: _i6.Future<List<_i4.Article>>.value(<_i4.Article>[]),
+      ) as _i6.Future<List<_i4.Article>>);
 }

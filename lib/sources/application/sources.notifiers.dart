@@ -6,7 +6,7 @@ part 'sources.notifiers.g.dart';
 
 @Riverpod(keepAlive: true)
 Future<List<Source>> allSources(AllSourcesRef ref) async {
-  return ref.watch(articlesRepositoryProvider).getSources();
+  return ref.watch(sourcesRepositoryProvider).getSources();
 }
 
 @Riverpod(keepAlive: true)

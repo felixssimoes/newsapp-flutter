@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:newsapp/articles/articles.dart';
 import 'package:newsapp/core/presentation.dart';
+import 'package:newsapp/sources/sources.dart';
 
 import '../../widgets/category_source_icon.dart';
 import '../../widgets/source_following_button.dart';

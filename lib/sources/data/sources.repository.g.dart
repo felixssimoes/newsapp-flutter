@@ -1,29 +1,27 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'articles.repository.dart';
+part of 'sources.repository.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$ArticlesResponseImpl _$$ArticlesResponseImplFromJson(
+_$SourcesResponseImpl _$$SourcesResponseImplFromJson(
         Map<String, dynamic> json) =>
-    _$ArticlesResponseImpl(
+    _$SourcesResponseImpl(
       status: json['status'] as String,
-      articles: (json['articles'] as List<dynamic>?)
-          ?.map((e) => Article.fromJson(e as Map<String, dynamic>))
+      sources: (json['sources'] as List<dynamic>?)
+          ?.map((e) => Source.fromJson(e as Map<String, dynamic>))
           .toList(),
-      totalResults: json['totalResults'] as int?,
       code: json['code'] as String?,
       message: json['message'] as String?,
     );
 
-Map<String, dynamic> _$$ArticlesResponseImplToJson(
-        _$ArticlesResponseImpl instance) =>
+Map<String, dynamic> _$$SourcesResponseImplToJson(
+        _$SourcesResponseImpl instance) =>
     <String, dynamic>{
       'status': instance.status,
-      'articles': instance.articles,
-      'totalResults': instance.totalResults,
+      'sources': instance.sources,
       'code': instance.code,
       'message': instance.message,
     };

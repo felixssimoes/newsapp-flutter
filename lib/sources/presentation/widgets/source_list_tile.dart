@@ -1,10 +1,10 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:newsapp/articles/domain/source.model.dart';
 import 'package:newsapp/core/presentation.dart';
 import 'package:newsapp/sources/presentation/widgets/category_source_icon.dart';
 import 'package:newsapp/sources/presentation/widgets/source_following_button.dart';
+import 'package:newsapp/sources/sources.dart';
 
 class SourceListTile extends StatelessWidget {
   const SourceListTile({

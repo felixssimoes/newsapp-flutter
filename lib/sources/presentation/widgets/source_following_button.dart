@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:newsapp/articles/articles.dart';
 import 'package:newsapp/core/l10n.dart';
 import 'package:newsapp/core/presentation.dart';
 import 'package:newsapp/sources/sources.dart';

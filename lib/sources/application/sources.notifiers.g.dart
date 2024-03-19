@@ -6,7 +6,7 @@ part of 'sources.notifiers.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$allSourcesHash() => r'423aa0f3311f6cff0c909d4bc45e0f0bbce7ea16';
+String _$allSourcesHash() => r'ff897507cc2cd8462b2eb7cf808a42f8126fe572';
 
 /// See also [allSources].
 @ProviderFor(allSources)
