@@ -4,6 +4,7 @@ import 'package:newsapp/articles/articles.dart';
 import 'package:newsapp/core/l10n.dart';
 import 'package:newsapp/core/presentation.dart';
 import 'package:newsapp/home/home.dart';
+import 'package:newsapp/home/presentation/list/widgets/home_empty.dart';
 
 import '../../../_helpers/widgets.dart';
 
@@ -40,6 +41,10 @@ class HomeListScreenRobot {
       find.byType(ArticleListTile, skipOffstage: false),
       findsNWidgets(n),
     );
+  }
+
+  void expectToFindEmpty() {
+    expect(find.byType(HomeEmpty), findsOneWidget);
   }
 
   Future<void> tapArticle(int index) async {

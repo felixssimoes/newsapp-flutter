@@ -85,5 +85,46 @@ void main() {
       verifyNoMoreInteractions(repository);
       verifyNoMoreInteractions(router);
     });
+
+    testWidgets('initialization with empty articles', (tester) async {
+      final repository = MockArticlesRepository();
+      final router = MockAppRouter();
+      final prefs = await SharedPreferences.getInstance();
+
+      final sourceIds = <String>[];
+
+      when(repository.getEverything(
+        query: anyNamed('query'),
+        searchIn: anyNamed('searchIn'),
+        domains: anyNamed('domains'),
+        sources: anyNamed('sources'),
+        excludeDomains: anyNamed('excludeDomains'),
+        fromDate: anyNamed('fromDate'),
+        toDate: anyNamed('toDate'),
+        page: anyNamed('page'),
+        sortBy: anyNamed('sortBy'),
+      )).thenAnswer((_) async => []);
+
+      prefs.setStringList(
+        'followed_sources',
+        sourceIds,
+      );
+
+      final r = HomeListScreenRobot(tester);
+      await r.pumpHomeListScreen(
+        repository: repository,
+        router: router,
+      );
+
+      r.expectToFindTitle();
+      r.expectToFindProgressIndicator(true);
+
+      await tester.pumpAndSettle();
+
+      r.expectToFindEmpty();
+      r.expectToFindProgressIndicator(false);
+      verifyZeroInteractions(repository);
+      verifyZeroInteractions(router);
+    });
   });
 }

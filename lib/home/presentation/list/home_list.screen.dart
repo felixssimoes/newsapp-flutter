@@ -5,6 +5,7 @@ import 'package:newsapp/core/l10n.dart';
 import 'package:newsapp/core/presentation.dart';
 
 import '../../application/home.notifiers.dart';
+import 'widgets/home_empty.dart';
 
 class HomeListScreen extends ConsumerWidget {
   const HomeListScreen({super.key});
@@ -17,6 +18,11 @@ class HomeListScreen extends ConsumerWidget {
         AsyncValueWidget(
           value: ref.watch(homeArticlesProvider),
           data: (articles) {
+            if (articles.isEmpty) {
+              return const SliverFillRemaining(
+                child: HomeEmpty(),
+              );
+            }
             return SliverList.separated(
               itemCount: articles.length,
               itemBuilder: (context, index) {
