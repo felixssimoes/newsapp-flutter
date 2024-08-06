@@ -9,9 +9,15 @@ class HomeEmpty extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Text(
-        'No articles found.\n\nPlease select one or more sources.'.hardcoded,
-        textAlign: TextAlign.center,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            'No articles found.\n\nPlease select one or more sources.'
+                .hardcoded,
+            textAlign: TextAlign.center,
+          ),
+        ],
       ),
     );
   }

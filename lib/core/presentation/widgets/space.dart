@@ -2,22 +2,24 @@ import 'package:flutter/material.dart';
 
 @immutable
 class Space extends StatelessWidget {
-  final double? _width;
-  final double? _height;
+  const Space({
+    required this.size,
+    super.key,
+  });
 
-  const Space.horizontal(double size, {super.key})
-      : _width = size,
-        _height = null;
+  static const Space xs = Space(size: 4.0);
+  static const Space s = Space(size: 8.0);
+  static const Space m = Space(size: 16.0);
+  static const Space l = Space(size: 32.0);
+  static const Space xl = Space(size: 64.0);
 
-  const Space.vertical(double size, {super.key})
-      : _height = size,
-        _width = null;
+  final double size;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: _width,
-      height: _height,
+      height: size,
+      width: size,
     );
   }
 }

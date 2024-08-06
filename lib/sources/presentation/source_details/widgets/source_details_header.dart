@@ -27,7 +27,7 @@ class SourceDetailsHeader extends StatelessWidget {
                   source: source,
                   size: 104,
                 ),
-                const Space.horizontal(16),
+                Space.m,
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -39,7 +39,7 @@ class SourceDetailsHeader extends StatelessWidget {
                           color: AppColors.blueyGrey,
                         ),
                       ),
-                      const Space.vertical(16),
+                      Space.m,
                       SourceFollowingButton(source: source),
                     ],
                   ),
