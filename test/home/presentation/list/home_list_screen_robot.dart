@@ -18,7 +18,7 @@ class HomeListScreenRobot {
   }) async {
     await tester.pumpWidget(
       wrapWithProviderScopeAndMaterialApp(
-        const HomeListScreen(),
+        HomeListScreen(onGoToSources: () {}),
         articlesRepository: repository,
         router: router,
       ),

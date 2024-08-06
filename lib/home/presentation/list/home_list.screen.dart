@@ -8,7 +8,12 @@ import '../../application/home.notifiers.dart';
 import 'widgets/home_empty.dart';
 
 class HomeListScreen extends ConsumerWidget {
-  const HomeListScreen({super.key});
+  const HomeListScreen({
+    required this.onGoToSources,
+    super.key,
+  });
+
+  final VoidCallback onGoToSources;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -19,8 +24,8 @@ class HomeListScreen extends ConsumerWidget {
           value: ref.watch(homeArticlesProvider),
           data: (articles) {
             if (articles.isEmpty) {
-              return const SliverFillRemaining(
-                child: HomeEmpty(),
+              return SliverFillRemaining(
+                child: HomeEmpty(onGoToSources: onGoToSources),
               );
             }
             return SliverList.separated(

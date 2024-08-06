@@ -38,7 +38,7 @@ class CategorySourcePreviewItem extends ConsumerWidget {
               fontSize: 14,
             ),
           ),
-          Space.m,
+          Space.s,
           SourceFollowingButton(source: source),
         ],
       ),

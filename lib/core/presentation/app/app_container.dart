@@ -26,7 +26,9 @@ class _AppContainerState extends State<AppContainer> {
             child: IndexedStack(
               index: _selectedIndex,
               children: [
-                const HomeListScreen(),
+                HomeListScreen(
+                  onGoToSources: () => setState(() => _selectedIndex = 3),
+                ),
                 const HeadlinesListScreen(),
                 Center(child: Text('Following'.hardcoded)),
                 const SourcesListScreen(),
