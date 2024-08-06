@@ -56,29 +56,10 @@ class CategorySourcesPreviewList extends ConsumerWidget {
                 }),
           ),
           const Spacer(),
-          TextButton(
+          GenericTextButton(
+            text: 'See more ${category.capitalize().hardcoded}'.hardcoded,
             onPressed: () =>
                 ref.read(appRouterProvider).openCategorySources(category),
-            child: Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('See more ${category.capitalize().hardcoded}'.hardcoded,
-                      textAlign: TextAlign.center,
-                      style: TextStyles.poppinsRegular.copyWith(
-                        color: AppColors.camo,
-                        fontSize: 14,
-                        height: 1.5,
-                      )),
-                  Space.xs,
-                  const Icon(
-                    Icons.arrow_forward_ios,
-                    color: AppColors.camo,
-                    size: 16,
-                  ),
-                ],
-              ),
-            ),
           ),
         ],
       ),
