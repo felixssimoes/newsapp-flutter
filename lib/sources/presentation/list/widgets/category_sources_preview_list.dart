@@ -35,7 +35,7 @@ class CategorySourcesPreviewList extends ConsumerWidget {
               ),
             ),
           ),
-          Space.m(),
+          Space.m,
           SizedBox(
             height: 200,
             child: AsyncValueWidget(
@@ -47,7 +47,7 @@ class CategorySourcesPreviewList extends ConsumerWidget {
                     scrollDirection: Axis.horizontal,
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     itemCount: min(sources.length, 3),
-                    separatorBuilder: (context, index) => Space.l(),
+                    separatorBuilder: (context, index) => Space.l,
                     itemBuilder: (context, index) {
                       final source = sources[index];
                       return CategorySourcePreviewItem(source: source);
@@ -70,7 +70,7 @@ class CategorySourcesPreviewList extends ConsumerWidget {
                         fontSize: 14,
                         height: 1.5,
                       )),
-                  Space.xs(),
+                  Space.xs,
                   const Icon(
                     Icons.arrow_forward_ios,
                     color: AppColors.camo,

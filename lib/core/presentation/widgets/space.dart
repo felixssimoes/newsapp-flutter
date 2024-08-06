@@ -7,11 +7,11 @@ class Space extends StatelessWidget {
     super.key,
   });
 
-  factory Space.xs() => const Space(size: 4.0);
-  factory Space.s() => const Space(size: 8.0);
-  factory Space.m() => const Space(size: 16.0);
-  factory Space.l() => const Space(size: 32.0);
-  factory Space.xl() => const Space(size: 64.0);
+  static const Space xs = Space(size: 4.0);
+  static const Space s = Space(size: 8.0);
+  static const Space m = Space(size: 16.0);
+  static const Space l = Space(size: 32.0);
+  static const Space xl = Space(size: 64.0);
 
   final double size;
 

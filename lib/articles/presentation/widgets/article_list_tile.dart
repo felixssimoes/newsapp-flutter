@@ -36,7 +36,7 @@ class ArticleListTile extends ConsumerWidget {
                 fit: BoxFit.cover,
               ),
             ),
-            Space.m(),
+            Space.m,
           ],
           if (article.source.name != null && !hideSource) ...[
             Text(
@@ -48,7 +48,7 @@ class ArticleListTile extends ConsumerWidget {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),
-            Space.s(),
+            Space.s,
           ],
           Text(
             article.title,
@@ -61,7 +61,7 @@ class ArticleListTile extends ConsumerWidget {
             overflow: TextOverflow.ellipsis,
           ),
           if (article.description != null) ...[
-            Space.s(),
+            Space.s,
             Text(
               article.description!,
               style: TextStyles.poppinsRegular.copyWith(
@@ -72,7 +72,7 @@ class ArticleListTile extends ConsumerWidget {
               overflow: TextOverflow.ellipsis,
             ),
           ],
-          Space.l(),
+          Space.l,
           Text(Jiffy.parseFromDateTime(article.publishedAt).fromNow(),
               style: TextStyles.poppinsItalic.copyWith(
                 fontSize: 12,
