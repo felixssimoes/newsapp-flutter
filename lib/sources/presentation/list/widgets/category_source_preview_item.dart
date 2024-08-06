@@ -28,7 +28,7 @@ class CategorySourcePreviewItem extends ConsumerWidget {
               size: 104,
             ),
           ),
-          const Space.vertical(12),
+          Space.m(),
           Text(
             source.name,
             maxLines: 1,
@@ -38,7 +38,7 @@ class CategorySourcePreviewItem extends ConsumerWidget {
               fontSize: 14,
             ),
           ),
-          const Space.vertical(12),
+          Space.m(),
           SourceFollowingButton(source: source),
         ],
       ),
